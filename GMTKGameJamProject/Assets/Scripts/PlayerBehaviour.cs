@@ -9,11 +9,13 @@ public class PlayerBehaviour : MonoBehaviour
     public Transform TreePrefab;
     private Transform TreePreview;
     private bool isHoldingTree;
+    private bool isFacingRight;
 
 
     void Start()
     {
         isHoldingTree = false;
+        isFacingRight = true;
     }
 
     
@@ -30,12 +32,30 @@ public class PlayerBehaviour : MonoBehaviour
         var _positionOffset = new Vector3(_x, _y, 0) * MovementSpeed;
 
         transform.position += _positionOffset;
-
+        DeterminFacingDirection(_x);
     }
+    void DeterminFacingDirection(float _x)
+    {
+        if(_x > 0)
+        {
+            isFacingRight = true;
+        }
+        if(_x <0)
+        {
+            isFacingRight = false;
+        }
+    }
+
+
 
     void PlaceTree()
     {
+
         var _treePlacement = new Vector3(1, 0, 0) + transform.position;
+        if(!isFacingRight)
+        {
+            _treePlacement = new Vector3(-1, 0, 0) + transform.position;
+        }
         
         if (Input.GetKey(KeyCode.E))
         {
@@ -61,7 +81,6 @@ public class PlayerBehaviour : MonoBehaviour
                 Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
-
             }
         }
 
