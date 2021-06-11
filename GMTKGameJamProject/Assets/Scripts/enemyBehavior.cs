@@ -71,7 +71,7 @@ public class enemyBehavior : MonoBehaviour
 
 
     }
-    public void TakeDamage(_Damage)
+    public void TakeDamage(int _Damage)
     {
         
     }
