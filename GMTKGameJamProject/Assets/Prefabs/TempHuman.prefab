@@ -96,5 +96,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  tree: {fileID: 0}
-  target: {fileID: 0}

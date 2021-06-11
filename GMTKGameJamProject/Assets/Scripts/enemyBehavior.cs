@@ -12,7 +12,7 @@ public class enemyBehavior : MonoBehaviour
     {
         isAttacking = false;
         target = GetClosestTree(GameObject.FindGameObjectsWithTag("tree"));
-        Debug.Log(target);
+       
     }
 
     // Update is called once per frame
@@ -64,12 +64,15 @@ public class enemyBehavior : MonoBehaviour
         var _DistanceToTarget = Vector3.Distance(transform.position, DesiredPosition);
         if (_DistanceToTarget > 2)
         {
-            Debug.Log(DesiredPosition);
+            
             transform.position = Vector3.Lerp(transform.position, DesiredPosition, Time.deltaTime * 0.1f);
         }
         
 
 
     }
-
+    public void TakeDamage(_Damage)
+    {
+        
+    }
 }
