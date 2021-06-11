@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1906279129723940313}
   - component: {fileID: 7119994837528896890}
+  - component: {fileID: 302789342263063566}
   m_Layer: 0
   m_Name: TempHuman
   m_TagString: Untagged
@@ -82,3 +83,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &302789342263063566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6782319383292781309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1bdafb29cbb8e046a6e6da7b1f8bcdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAttacking: 0
+  tree: {fileID: 0}
+  target: {fileID: 0}
