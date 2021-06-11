@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 4.86
   TreePreviewPrefab: {fileID: 7889551846895985691, guid: 4d3459359bf5dfd4282209f0ff6949a9, type: 3}
+  TreePrefab: {fileID: 7818907399987851685, guid: d32bfc4b9e48c84469a6074fd8df50e0, type: 3}
 --- !u!212 &1726081577
 SpriteRenderer:
   m_ObjectHideFlags: 0

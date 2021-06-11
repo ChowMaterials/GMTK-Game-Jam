@@ -6,8 +6,10 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
     public Transform TreePreviewPrefab;
+    public Transform TreePrefab;
     private Transform TreePreview;
     private bool isHoldingTree;
+
 
     void Start()
     {
@@ -42,8 +44,6 @@ public class PlayerBehaviour : MonoBehaviour
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
                 isHoldingTree = true;
             }
-             
-
         }
         if (Input.GetKey(KeyCode.E))
         {
@@ -51,8 +51,18 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 TreePreview.position = _treePlacement;
             }
-            
+        }
 
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            if(isHoldingTree)
+            {
+                var _newTreeOffset = _treePlacement + new Vector3(0,0,1);
+                Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
+                isHoldingTree = false;
+                Destroy(TreePreview.gameObject);
+
+            }
         }
 
     }
