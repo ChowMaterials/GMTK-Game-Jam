@@ -5,16 +5,20 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
-    
+    public Transform TreePreviewPrefab;
+    private Transform TreePreview;
+    private bool isHoldingTree;
+
     void Start()
     {
-        
+        isHoldingTree = false;
     }
 
     
     void Update()
     {
         Movement();
+        PlaceTree();
     }
 
     void Movement()
@@ -26,4 +30,32 @@ public class PlayerBehaviour : MonoBehaviour
         transform.position += _positionOffset;
 
     }
+
+    void PlaceTree()
+    {
+        var _treePlacement = new Vector3(1, 0, 0) + transform.position;
+        
+        if (Input.GetKey(KeyCode.E))
+        {
+            if(!isHoldingTree)
+            {
+                TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
+                isHoldingTree = true;
+            }
+             
+
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            if(isHoldingTree)
+            {
+                TreePreview.position = _treePlacement;
+            }
+            
+
+        }
+
+    }
+
+
 }
