@@ -23,6 +23,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Movement();
         PlaceTree();
+        RallyAnimals();
     }
 
     void Movement()
@@ -87,4 +88,13 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
 
+
+    void RallyAnimals()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            AnimalBehaviour.DesiredPosition = transform.position;
+        }
+
+    }
 }
