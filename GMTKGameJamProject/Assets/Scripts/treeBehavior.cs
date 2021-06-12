@@ -52,7 +52,7 @@ public class treeBehavior : MonoBehaviour
         GrowCycle();
 
         //The Circle Collider grows with the tree
-        empowerementZone.radius = 0.08f + 0.02f * (GrowSageIndedx + 1);
+        empowerementZone.radius = 0.08f + 0.03f * (GrowSageIndedx + 1);
 
     }
 
@@ -60,7 +60,7 @@ public class treeBehavior : MonoBehaviour
     {
         if(!treeGrowing)
         {
-            if (GrowSageIndedx<5)
+            if (GrowSageIndedx<4)
             {
                 StartCoroutine(Growing());
             } 

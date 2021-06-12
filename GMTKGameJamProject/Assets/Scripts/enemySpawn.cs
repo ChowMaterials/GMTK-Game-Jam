@@ -7,7 +7,7 @@ public class enemySpawn : MonoBehaviour
 
     public GameObject enemyPrefab;
     public float spawnRadius;
-    public float spawnTimer;
+    public float spawnTimer = 1;
 
     private bool intoCouroutine;
     private GameObject enemySpawned;
@@ -16,7 +16,6 @@ public class enemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnTimer = 4;
         intoCouroutine = false;
     }
 

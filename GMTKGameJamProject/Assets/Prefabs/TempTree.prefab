@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1279330265130135741, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -105,7 +105,6 @@ MonoBehaviour:
   GrowSageIndedx: 0
   GrowStage:
   - {fileID: 1279330265130135741, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
-  - {fileID: -2548105479602146829, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: -4748626754311878302, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: -6661628979808241995, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: 6067550038348995488, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
