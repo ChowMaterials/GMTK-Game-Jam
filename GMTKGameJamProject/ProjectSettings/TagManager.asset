@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - factory
+  - tree
+  - Enemy
   layers:
   - Default
   - TransparentFX

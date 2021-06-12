@@ -26,9 +26,11 @@ public class AnimalBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.gameObject.tag == "Enemy")
         {
             Attack(other);
+            
         }
 
     }
@@ -48,11 +50,11 @@ public class AnimalBehaviour : MonoBehaviour
 
     void Attack(Collider2D _Enemy)
     {
-        if(AttackCooldown>AttackSpeed)
+        if(AttackCooldown>1/AttackSpeed)
         {
-            _Enemy.gameObject.GetComponent<enemySpawn>();
+            _Enemy.gameObject.GetComponent<enemyBehavior>().TakeDamage(10);
 
-            //Deal damage to the humanHere
+           
         }
 
 

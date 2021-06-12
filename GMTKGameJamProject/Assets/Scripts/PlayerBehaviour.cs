@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
+    public Transform TreeCollection;
     public Transform TreePreviewPrefab;
     public Transform TreePrefab;
     private Transform TreePreview;
@@ -79,7 +80,8 @@ public class PlayerBehaviour : MonoBehaviour
             if(isHoldingTree)
             {
                 var _newTreeOffset = _treePlacement + new Vector3(0,0,1);
-                Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
+                var _tree =Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
+                _tree.parent = TreeCollection;
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
             }
