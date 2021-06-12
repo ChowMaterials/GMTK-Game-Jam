@@ -8,6 +8,7 @@ public class enemyBehavior : MonoBehaviour
     public bool canAttack;
     public bool foundTarget;
 
+
     private Vector3 desiredPosition;
     private Transform target;
     
@@ -15,34 +16,18 @@ public class enemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< Updated upstream
-        isAttacking = false;
-=======
         strikeCooldown = 1;
         canAttack = true;
         init();
 
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-
-        //transform.position = Vector3.Lerp(transform.position, new Vector3 (0,0,0), Time.deltaTime * 0.1f);
-=======
->>>>>>> Stashed changes
 
         if (!foundTarget)
         {
-<<<<<<< Updated upstream
-            target = GetClosestTree(GameObject.FindGameObjectsWithTag("tree"));
-            if (target != null)
-            {
-                isAttacking = true;
-                Move(target.position);
-=======
             if (target != null)
             {
                 foundTarget = true;
@@ -50,7 +35,6 @@ public class enemyBehavior : MonoBehaviour
             else
             {
                 init();
->>>>>>> Stashed changes
             }
         }
         else
@@ -118,19 +102,12 @@ public class enemyBehavior : MonoBehaviour
         var _DistanceToTarget = Vector3.Distance(transform.position, DesiredPosition);
         if (_DistanceToTarget > 0.5f)
         {
-<<<<<<< Updated upstream
-            Debug.Log("I'm going !");
-            transform.position = Vector3.Lerp(transform.position, DesiredPosition, Time.deltaTime * 0.1f);
-=======
             transform.position = Vector3.MoveTowards(transform.position, DesiredPosition, Time.deltaTime * 1f);
->>>>>>> Stashed changes
         }
 
 
     }
 
-<<<<<<< Updated upstream
-=======
     public void init()
     {
         foundTarget = false;
@@ -149,5 +126,4 @@ public class enemyBehavior : MonoBehaviour
     {
         
     }
->>>>>>> Stashed changes
 }
