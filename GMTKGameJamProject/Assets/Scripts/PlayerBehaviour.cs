@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isHoldingTree;
     private bool isFacingRight;
 
-    private GameObject collidingWith;
+    private int seedsInStock;
+    private float plantCooldown = 3f; //Can plant a tree every 3 seconds
+    private Text seedUI;
+    private Image seedWheel;
+    public bool waitingToPlant;
+
+    public GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
     private Color defaultColor = new Color(16, 159, 173, 255);
@@ -25,6 +32,15 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Start()
     {
+        seedsInStock = 10; // start the game with 10 seeds to build your forest
+        waitingToPlant = false;
+
+
+        seedUI = GameObject.Find("Seeds").GetComponent<Text>();
+        seedUI.text = "Seeds : " + seedsInStock;
+        seedWheel = GameObject.Find("seedCooldownWheel").GetComponent<Image>();
+        seedWheel.fillAmount = 1;
+
         charSprite = GetComponent<SpriteRenderer>();
         empowering = false;
         isHoldingTree = false;
@@ -37,10 +53,17 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
-        
         PlaceTree();
         RallyAnimals();
         empower();
+
+        if (seedWheel.fillAmount < 1)
+            seedWheel.fillAmount += 0.3333f * 1f * Time.deltaTime;
+
+        if (seedWheel.fillAmount == 1)
+            seedWheel.color = Color.green;
+        else
+            seedWheel.color = Color.red;
         
     }
 
@@ -101,6 +124,17 @@ public class PlayerBehaviour : MonoBehaviour
         _line.SetPosition(1, _endPoint);
     }
 
+    bool canPlant()
+    { 
+        return !waitingToPlant;
+    }
+
+    IEnumerator waitToPlant()
+    {
+        waitingToPlant = true;
+        yield return new WaitForSeconds(plantCooldown);
+        waitingToPlant = false;
+    }
 
     void PlaceTree()
     {
@@ -111,8 +145,11 @@ public class PlayerBehaviour : MonoBehaviour
             _treePlacement = new Vector3(-1, 0, 0) + transform.position;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && canPlant() && seedsInStock > 0)
         {
+            StartCoroutine(waitToPlant());
+            seedsInStock--;
+            seedUI.text = "Seeds : " + seedsInStock;
             if (!isHoldingTree)
             {
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
@@ -136,12 +173,13 @@ public class PlayerBehaviour : MonoBehaviour
                 
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
+                seedWheel.fillAmount = 0;
             }
         }
 
     }
 
-
+    
 
     void RallyAnimals()
     {

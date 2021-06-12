@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5730877162911557582}
   - component: {fileID: 9022139654653784070}
   - component: {fileID: 8531053365419069569}
+  - component: {fileID: 6474632910429585755}
   m_Layer: 0
   m_Name: TempTree
   m_TagString: tree
@@ -108,6 +109,8 @@ MonoBehaviour:
   - {fileID: -4748626754311878302, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: -6661628979808241995, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: 6067550038348995488, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
+  TreeCollection: {fileID: 0}
+  empowered: 0
 --- !u!61 &9022139654653784070
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -155,3 +158,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &6474632910429585755
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7818907399987851687}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.00000011920929}
+  serializedVersion: 2
+  m_Radius: 0.08

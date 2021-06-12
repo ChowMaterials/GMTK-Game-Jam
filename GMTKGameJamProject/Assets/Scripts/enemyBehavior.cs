@@ -17,7 +17,7 @@ public class enemyBehavior : MonoBehaviour
     void Start()
     {
         speed = 1; // go high for testing purposes, but it should probably be set to 1 or 1,5f
-        strikeCooldown = 1; //number of seconds to wait between attacks
+        strikeCooldown = 2; //number of seconds to wait between attacks
         init();
 
     }
