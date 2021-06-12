@@ -11,6 +11,8 @@ public class PlayerBehaviour : MonoBehaviour
     private Transform TreePreview;
     private bool isHoldingTree;
     private bool isFacingRight;
+    private GameObject collidingWith;
+    private int collisionCounter;
 
 
     void Start()
@@ -25,6 +27,7 @@ public class PlayerBehaviour : MonoBehaviour
         Movement();
         PlaceTree();
         RallyAnimals();
+        empower();
     }
 
     void Movement()
@@ -99,4 +102,34 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
     }
+
+    void empower()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("Colliding with : " + collidingWith);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D myCollision)
+    {
+        Debug.Log("Colliding with : " + myCollision.gameObject.tag);
+        if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
+        {
+            
+            collidingWith = myCollision.gameObject;
+            collisionCounter++;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D myCollision)
+    {
+        if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
+        {
+            collidingWith = null;
+            collisionCounter--;
+        }
+    }
+
+
 }
