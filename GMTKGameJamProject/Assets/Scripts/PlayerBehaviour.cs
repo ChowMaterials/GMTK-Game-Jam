@@ -5,20 +5,28 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
-    public Transform TreeCollection;
     public Transform TreePreviewPrefab;
-    public Transform TreePrefab;
     private Transform TreePreview;
     private bool isHoldingTree;
+<<<<<<< Updated upstream
+=======
     private bool isFacingRight;
-    private GameObject collidingWith;
-    private int collisionCounter;
 
+    private GameObject collidingWith;
+    private bool empowering; // if the spirit is empowering, it can no longer move
+    private SpriteRenderer charSprite;
+    private Color defaultColor = new Color(16,159,173,255);
+    private Color empoweringColor = new Color(255, 250, 26, 146);
+
+    
+
+>>>>>>> Stashed changes
 
     void Start()
     {
+        charSprite = GetComponent<SpriteRenderer>();
+        empowering = false;
         isHoldingTree = false;
-        isFacingRight = true;
     }
 
     
@@ -26,18 +34,23 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Movement();
         PlaceTree();
-        RallyAnimals();
-        empower();
     }
 
     void Movement()
     {
-        var _x = Input.GetAxis("Horizontal")*Time.deltaTime;
-        var _y = Input.GetAxis("Vertical") * Time.deltaTime;
-        var _positionOffset = new Vector3(_x, _y, 0) * MovementSpeed;
+        // can only move if not empowering
+        if (!empowering)
+        {
+            var _x = Input.GetAxis("Horizontal") * Time.deltaTime;
+            var _y = Input.GetAxis("Vertical") * Time.deltaTime;
+            var _positionOffset = new Vector3(_x, _y, 0) * MovementSpeed;
 
+<<<<<<< Updated upstream
         transform.position += _positionOffset;
-        DeterminFacingDirection(_x);
+=======
+            transform.position += _positionOffset;
+            DeterminFacingDirection(_x);
+        }        
     }
     void DeterminFacingDirection(float _x)
     {
@@ -51,16 +64,13 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+>>>>>>> Stashed changes
 
+    }
 
     void PlaceTree()
     {
-
         var _treePlacement = new Vector3(1, 0, 0) + transform.position;
-        if(!isFacingRight)
-        {
-            _treePlacement = new Vector3(-1, 0, 0) + transform.position;
-        }
         
         if (Input.GetKey(KeyCode.E))
         {
@@ -69,6 +79,8 @@ public class PlayerBehaviour : MonoBehaviour
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
                 isHoldingTree = true;
             }
+             
+
         }
         if (Input.GetKey(KeyCode.E))
         {
@@ -76,6 +88,10 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 TreePreview.position = _treePlacement;
             }
+<<<<<<< Updated upstream
+            
+
+=======
         }
 
         if (Input.GetKeyUp(KeyCode.E))
@@ -105,33 +121,42 @@ public class PlayerBehaviour : MonoBehaviour
 
     void empower()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !empowering)
         {
-            Debug.Log("Colliding with : " + collidingWith);
+            Debug.Log("Colliding with : " + collidingWith.gameObject.tag);
+            if (collidingWith != null)
+            {
+                empowering = true;
+                charSprite.color = empoweringColor;
+                StartCoroutine(empoweringTimer());
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D myCollision)
     {
-        Debug.Log("Colliding with : " + myCollision.gameObject.tag);
+        
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
-            
             collidingWith = myCollision.gameObject;
-            collisionCounter++;
         }
     }
 
     void OnTriggerExit2D(Collider2D myCollision)
     {
-        
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = null;
-            collisionCounter--;
-            
+>>>>>>> Stashed changes
         }
+
     }
 
+    IEnumerator empoweringTimer()
+    {
+        yield return new WaitForSeconds(3); //empowers for 3 seconds
+        empowering = false;
+        charSprite.color = defaultColor;
+    }
 
 }
