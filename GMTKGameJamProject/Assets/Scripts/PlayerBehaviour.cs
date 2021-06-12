@@ -15,10 +15,17 @@ public class PlayerBehaviour : MonoBehaviour
     private GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
+<<<<<<< HEAD
     private Color defaultColor = new Color(16,159,173,255);
     private Color empoweringColor = new Color(255, 250, 26, 146);
 
     
+=======
+    private Color defaultColor = new Color(16, 159, 173, 255);
+    private Color empoweringColor = new Color(255, 250, 26, 146);
+
+
+>>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
 
 >>>>>>> Stashed changes
 
@@ -29,7 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
         isHoldingTree = false;
     }
 
-    
+
     void Update()
     {
         Movement();
@@ -45,20 +52,26 @@ public class PlayerBehaviour : MonoBehaviour
             var _y = Input.GetAxis("Vertical") * Time.deltaTime;
             var _positionOffset = new Vector3(_x, _y, 0) * MovementSpeed;
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         transform.position += _positionOffset;
 =======
             transform.position += _positionOffset;
             DeterminFacingDirection(_x);
         }        
+=======
+            transform.position += _positionOffset;
+            DeterminFacingDirection(_x);
+        }
+>>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
     }
     void DeterminFacingDirection(float _x)
     {
-        if(_x > 0)
+        if (_x > 0)
         {
             isFacingRight = true;
         }
-        if(_x <0)
+        if (_x < 0)
         {
             isFacingRight = false;
         }
@@ -71,10 +84,18 @@ public class PlayerBehaviour : MonoBehaviour
     void PlaceTree()
     {
         var _treePlacement = new Vector3(1, 0, 0) + transform.position;
+<<<<<<< HEAD
         
+=======
+        if (!isFacingRight)
+        {
+            _treePlacement = new Vector3(-1, 0, 0) + transform.position;
+        }
+
+>>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         if (Input.GetKey(KeyCode.E))
         {
-            if(!isHoldingTree)
+            if (!isHoldingTree)
             {
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
                 isHoldingTree = true;
@@ -84,7 +105,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.E))
         {
-            if(isHoldingTree)
+            if (isHoldingTree)
             {
                 TreePreview.position = _treePlacement;
             }
@@ -96,10 +117,10 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            if(isHoldingTree)
+            if (isHoldingTree)
             {
-                var _newTreeOffset = _treePlacement + new Vector3(0,0,1);
-                var _tree =Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
+                var _newTreeOffset = _treePlacement + new Vector3(0, 0, 1);
+                var _tree = Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
                 _tree.parent = TreeCollection;
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
@@ -112,7 +133,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void RallyAnimals()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             AnimalBehaviour.DesiredPosition = transform.position;
         }
@@ -135,7 +156,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D myCollision)
     {
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = myCollision.gameObject;
@@ -147,7 +172,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = null;
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         }
 
     }
