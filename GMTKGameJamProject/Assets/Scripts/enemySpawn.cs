@@ -34,8 +34,7 @@ public class enemySpawn : MonoBehaviour
     IEnumerator EnemySpawn()
     {
         randomPos = Random.insideUnitSphere * spawnRadius;
-        randomPos.z = -1;
-        enemySpawned = Instantiate(enemyPrefab, transform.position + randomPos, Quaternion.identity);
+        enemySpawned = Instantiate(enemyPrefab, transform.position + new Vector3 (randomPos.x, randomPos.y, 2), Quaternion.identity);
         enemySpawned.transform.parent = gameObject.transform;
         yield return new WaitForSeconds(spawnTimer);
         intoCouroutine = false;
