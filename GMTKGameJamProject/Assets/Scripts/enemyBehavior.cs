@@ -6,63 +6,76 @@ public class enemyBehavior : MonoBehaviour
 {
     public float strikeCooldown;
     public bool canAttack;
-    public bool foundTarget;
-
+    public bool foundTreeToCut;
+    public float speed = 1f;
 
     private Vector3 desiredPosition;
-    private Transform target;
+    private Vector3 previousPosition;
+    public Transform target;
     
 
-    // Start is called before the first frame update
     void Start()
     {
-        strikeCooldown = 1;
-        canAttack = true;
+        speed = 1; // go high for testing purposes, but it should probably be set to 1 or 1,5f
+        strikeCooldown = 1; //number of seconds to wait between attacks
         init();
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-        if (!foundTarget)
+        //if no tree to cut was found yet
+        if (!foundTreeToCut)
         {
-            if (target != null)
+            //if the current target is not null and not the factory, it has to be a tree
+            if (target != null && target != transform.parent)
             {
-                foundTarget = true;
+                foundTreeToCut = true;
             }
             else
             {
+                //else let's look again
                 init();
+                if (target == transform.parent)
+                    Move(transform.parent.position);
             }
         }
+        //if we found a tree to cut
         else
         {
-            //Debug.Log(Vector3.Distance(transform.position, target.position));
+            previousPosition = transform.position;
             Move(desiredPosition);
-            if (!(transform.hasChanged) && canAttack)
+            //if we're no longer walking to the tree and we can attack we hit the tree once
+            if (Vector3.Distance(previousPosition,transform.position) == 0  && canAttack)
             {
-                Debug.Log("Yaaargh !");
                 canAttack = false;
                 target.GetComponent<treeBehavior>().hp--;
-                StartCoroutine("waitForattack");
-                if (target.GetComponent<treeBehavior>().hp <= 0)
-                {
-                    Destroy(target);
-                    target = null;
-                }
-                    
-            }
+                StartCoroutine(waitForAttack());
+
                 
+            }
+            if ((target.GetComponent<treeBehavior>().hp <= 3 && target.GetComponent<treeBehavior>().humansAttacking == 3)
+                || (target.GetComponent<treeBehavior>().hp <= 2 && target.GetComponent<treeBehavior>().humansAttacking == 2)
+                || (target.GetComponent<treeBehavior>().hp <= 1)
+                )
+            {
+                init();
+            }
+            /*//else if we're carrying wood we go back to the factory
+            else if(carryingWood)
+            {
+                target
+            }*/
         }
+
+        
     }
 
 
 
     Transform GetClosestTree(GameObject[] trees)
     {
-        Transform bestTarget = null;
+        Transform bestTarget = transform.parent;
         float closestDistanceSqr = Mathf.Infinity;
         Vector3 currentPosition = transform.position;
 
@@ -70,7 +83,8 @@ public class enemyBehavior : MonoBehaviour
         {
             Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
             float dSqrToTarget = directionToTarget.sqrMagnitude;
-            if (dSqrToTarget < closestDistanceSqr && Random.Range(1,11) > 1 && potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3)
+            //&& Random.Range(1,11) > 1 
+            if ((dSqrToTarget < closestDistanceSqr && potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3 && potentialTarget.GetComponent<treeBehavior>().hp > 1))
             {
                 closestDistanceSqr = dSqrToTarget;
                 bestTarget = potentialTarget.transform;
@@ -79,13 +93,13 @@ public class enemyBehavior : MonoBehaviour
 
         
 
-        if (bestTarget != null)
+        if (bestTarget != null && bestTarget != transform.parent)
         {
             desiredPosition = bestTarget.position;
             bestTarget.GetComponent<treeBehavior>().humansAttacking++;
-            if (bestTarget.GetComponent<treeBehavior>().humansAttacking >= 3)
+            if (bestTarget.GetComponent<treeBehavior>().humansAttacking >= 4)
             {
-                bestTarget = null;
+                bestTarget = transform.parent;
             }
         }
             
@@ -95,14 +109,12 @@ public class enemyBehavior : MonoBehaviour
         return bestTarget;
     }
 
-
-
     void Move(Vector3 DesiredPosition)
     {
         var _DistanceToTarget = Vector3.Distance(transform.position, DesiredPosition);
         if (_DistanceToTarget > 0.5f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, DesiredPosition, Time.deltaTime * 1f);
+            transform.position = Vector3.MoveTowards(transform.position, DesiredPosition, Time.deltaTime * speed);
         }
 
 
@@ -110,17 +122,17 @@ public class enemyBehavior : MonoBehaviour
 
     public void init()
     {
-        foundTarget = false;
+        foundTreeToCut = false;
+        canAttack = true;
         target = GetClosestTree(GameObject.FindGameObjectsWithTag("tree"));
     }
-
-    public 
 
     IEnumerator waitForAttack()
     {
         yield return new WaitForSeconds(strikeCooldown);
         canAttack = true;
     }
+
 
     public void TakeDamage(int _Damage)
     {

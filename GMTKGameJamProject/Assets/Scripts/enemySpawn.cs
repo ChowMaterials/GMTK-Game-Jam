@@ -22,7 +22,7 @@ public class enemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.childCount < 10 && !intoCouroutine)
+        if(transform.childCount < 12 && !intoCouroutine)
         {
             intoCouroutine = true;
             StartCoroutine(EnemySpawn());            
