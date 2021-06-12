@@ -124,7 +124,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D myCollision)
     {
-        Debug.Log("dshaisdh");
+        
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = null;
