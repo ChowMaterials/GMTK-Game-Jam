@@ -1,0 +1,528 @@
+fileFormatVersion: 2
+guid: 66643c46bcbc9aa4a9868fa6497b89af
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1007218280509968878
+    second: grass-texture_0
+  - first:
+      213: -5510170987458396033
+    second: grass-texture_1
+  - first:
+      213: -3973188109471857229
+    second: grass-texture_2
+  - first:
+      213: -8476361859583925455
+    second: grass-texture_3
+  - first:
+      213: 3779545626578295639
+    second: grass-texture_4
+  - first:
+      213: -3333521133210546540
+    second: grass-texture_5
+  - first:
+      213: -3941216087155715365
+    second: grass-texture_6
+  - first:
+      213: -237999683811081359
+    second: grass-texture_7
+  - first:
+      213: 4566488868233043420
+    second: grass-texture_8
+  - first:
+      213: 1382891831706348854
+    second: grass-texture_9
+  - first:
+      213: -997265018553221855
+    second: grass-texture_10
+  - first:
+      213: -924062014627368490
+    second: grass-texture_11
+  - first:
+      213: 597515744125813
+    second: grass-texture_12
+  - first:
+      213: -6915992035611952568
+    second: grass-texture_13
+  - first:
+      213: -2150479294697258624
+    second: grass-texture_14
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: 0
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: grass-texture_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 320
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21e6ce27f44a502f0800000000000000
+      internalID: -1007218280509968878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 304
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7001e85ea0f783b0800000000000000
+      internalID: -5510170987458396033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 320
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b5cf1d17766cd8c0800000000000000
+      internalID: -3973188109471857229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_3
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 336
+        width: 48
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 133a4d36cc9ed5a80800000000000000
+      internalID: -8476361859583925455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_4
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 336
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75b9494f8b4a37430800000000000000
+      internalID: 3779545626578295639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_5
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 256
+        width: 112
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49e4abbe034fcb1d0800000000000000
+      internalID: -3333521133210546540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_6
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd25706a9dcfd49c0800000000000000
+      internalID: -3941216087155715365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_7
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17309cd6c8472bcf0800000000000000
+      internalID: -237999683811081359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_8
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 208
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdd5ecd6e6d6f5f30800000000000000
+      internalID: 4566488868233043420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_9
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 224
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63d65a74bc4013310800000000000000
+      internalID: 1382891831706348854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_10
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12d3636dfb00922f0800000000000000
+      internalID: -997265018553221855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_11
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d134bb5e721d23f0800000000000000
+      internalID: -924062014627368490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_12
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 128
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5732da9ff6f120000800000000000000
+      internalID: 597515744125813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_13
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 128
+        width: 112
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a3be7d2e57500a0800000000000000
+      internalID: -6915992035611952568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grass-texture_14
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 081ccb6a976f722e0800000000000000
+      internalID: -2150479294697258624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -304, y: 128}
+      - {x: -304, y: 176}
+      - {x: -256, y: 176}
+      - {x: -256, y: 128}
+    - - {x: -240, y: 112}
+      - {x: -240, y: 175}
+      - {x: -176, y: 175}
+      - {x: -176, y: 112}
+    - - {x: -160, y: 128}
+      - {x: -160, y: 176}
+      - {x: -128, y: 176}
+      - {x: -128, y: 128}
+    - - {x: -64, y: 144}
+      - {x: -64, y: 176}
+      - {x: -16, y: 176}
+      - {x: -16, y: 144}
+    - - {x: 0, y: 144}
+      - {x: 0, y: 176}
+      - {x: 32, y: 176}
+      - {x: 32, y: 144}
+    - - {x: -304, y: 64}
+      - {x: -304, y: 112}
+      - {x: -256, y: 112}
+      - {x: -256, y: 64}
+    - - {x: -240, y: 48}
+      - {x: -240, y: 96}
+      - {x: -192, y: 96}
+      - {x: -192, y: 48}
+    - - {x: 48, y: 64}
+      - {x: 48, y: 176}
+      - {x: 160, y: 176}
+      - {x: 160, y: 64}
+    - - {x: -64, y: 32}
+      - {x: -64, y: 129}
+      - {x: 32, y: 129}
+      - {x: 32, y: 32}
+    - - {x: -176, y: 16}
+      - {x: -176, y: 112}
+      - {x: -80, y: 112}
+      - {x: -80, y: 16}
+    - - {x: -208, y: 0}
+      - {x: -208, y: 32}
+      - {x: -176, y: 32}
+      - {x: -176, y: 0}
+    - - {x: -304, y: 0}
+      - {x: -304, y: 32}
+      - {x: -272, y: 32}
+      - {x: -272, y: 0}
+    - - {x: -160, y: -64}
+      - {x: -160, y: 0}
+      - {x: -96, y: 0}
+      - {x: -96, y: -64}
+    - - {x: -48, y: -64}
+      - {x: -48, y: 16}
+      - {x: 32, y: 16}
+      - {x: 32, y: -64}
+    - - {x: 48, y: -64}
+      - {x: 48, y: 48}
+      - {x: 160, y: 48}
+      - {x: 160, y: -64}
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
