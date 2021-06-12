@@ -111,7 +111,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D myCollision)
+    void OnTriggerEnter2D(Collider2D myCollision)
     {
         Debug.Log("Colliding with : " + myCollision.gameObject.tag);
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
@@ -122,12 +122,14 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D myCollision)
+    void OnTriggerExit2D(Collider2D myCollision)
     {
+        Debug.Log("dshaisdh");
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = null;
             collisionCounter--;
+            
         }
     }
 
