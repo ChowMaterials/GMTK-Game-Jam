@@ -8,13 +8,18 @@ public class treeBehavior : MonoBehaviour
     public int humansAttacking;
     public int hp;
     public bool treeDying;
+    public bool treeGrowing;
+    public int GrowSageeIndedx;
+    public Sprite[] GrowStage;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         treeDying = false;
+        treeGrowing = false;
         humansAttacking = 0;
         hp = 10;
+        
     }
 
     private void Update()
@@ -29,6 +34,25 @@ public class treeBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        GrowCycle();
+    }
+
+    void GrowCycle()
+    {
+        if(!treeGrowing && GrowSageeIndedx != 4)
+        {
+            StartCoroutine(Growing());
+        }
+        
+
+    }
+    IEnumerator Growing()
+    {
+        treeGrowing = true;
+        yield return new WaitForSeconds(3);
+        GetComponent<SpriteRenderer>().sprite = GrowStage[GrowSageeIndedx];
+        GrowSageeIndedx++;
+        treeGrowing = false;
     }
 
 
@@ -39,4 +63,7 @@ public class treeBehavior : MonoBehaviour
         hp--;
         treeDying = false;
     }
+
+
+
 }
