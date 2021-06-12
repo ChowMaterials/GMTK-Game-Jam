@@ -11,6 +11,7 @@ public class treeBehavior : MonoBehaviour
     public bool treeGrowing;
     public int GrowSageeIndedx;
     public Sprite[] GrowStage;
+    private int suydgausyd;
 
     
     void Start()
