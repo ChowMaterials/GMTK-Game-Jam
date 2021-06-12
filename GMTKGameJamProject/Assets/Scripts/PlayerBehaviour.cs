@@ -163,7 +163,7 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     Debug.Log("You're protected !");
                     empowering = true;
-                    //collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+                    collidingWith.GetComponent<treeBehavior>().empowered = empowering;
                     charSprite.color = empoweringColor;
                     StartCoroutine(empoweringTimer());
                 }
@@ -191,7 +191,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(3); //empowers for 3 seconds
         empowering = false;
-      //  collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+        collidingWith.GetComponent<treeBehavior>().empowered = empowering;
         charSprite.color = defaultColor;
     }
 

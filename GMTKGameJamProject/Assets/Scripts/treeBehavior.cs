@@ -12,10 +12,13 @@ public class treeBehavior : MonoBehaviour
     public int GrowSageIndedx;
     public Sprite[] GrowStage;
     public Transform TreeCollection;
+    public bool empowered;
 
-    
+
+
     void Start()
     {
+        empowered = false;
         GetComponent<SpriteRenderer>().sprite = GrowStage[GrowSageIndedx];
         treeDying = false;
         treeGrowing = false;
@@ -26,6 +29,7 @@ public class treeBehavior : MonoBehaviour
 
     private void Update()
     {
+        
         if (hp <= 3)
         {
             if (!treeDying)
@@ -35,6 +39,12 @@ public class treeBehavior : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if (empowered)
+        {
+            hp = 10;
+            humansAttacking = 0;
         }
         GrowCycle();
     }

@@ -21,7 +21,7 @@ public class AnimalSpawning : MonoBehaviour
     void SpawnAnimals()
     {
         
-        if(Animals.childCount<transform.childCount)
+        if(Animals.childCount * 2 < transform.childCount)
         {
             
             var _SpawnPosition = transform.GetChild(transform.childCount-1).position;

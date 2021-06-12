@@ -16,6 +16,7 @@ public class enemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spawnTimer = 4;
         intoCouroutine = false;
     }
 
