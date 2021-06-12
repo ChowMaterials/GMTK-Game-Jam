@@ -8,7 +8,7 @@ public class enemyBehavior : MonoBehaviour
     public bool canAttack;
     public bool foundTreeToCut;
     public float speed = 1f;
-
+    public int health = 100;
     private Vector3 desiredPosition;
     private Vector3 previousPosition;
     public Transform target;
@@ -136,6 +136,15 @@ public class enemyBehavior : MonoBehaviour
 
     public void TakeDamage(int _Damage)
     {
+        health -= _Damage;
         
+        if(health<=0)
+        {
+            Death();
+        }
+    }
+    void Death()
+    {
+
     }
 }
