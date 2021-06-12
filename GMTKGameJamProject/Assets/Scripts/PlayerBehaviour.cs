@@ -5,35 +5,28 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
+    public Transform TreeCollection;
     public Transform TreePreviewPrefab;
+    public Transform TreePrefab;
     private Transform TreePreview;
     private bool isHoldingTree;
-<<<<<<< Updated upstream
-=======
     private bool isFacingRight;
 
     private GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
-<<<<<<< HEAD
-    private Color defaultColor = new Color(16,159,173,255);
-    private Color empoweringColor = new Color(255, 250, 26, 146);
-
-    
-=======
     private Color defaultColor = new Color(16, 159, 173, 255);
     private Color empoweringColor = new Color(255, 250, 26, 146);
 
 
->>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
 
->>>>>>> Stashed changes
 
     void Start()
     {
         charSprite = GetComponent<SpriteRenderer>();
         empowering = false;
         isHoldingTree = false;
+        isFacingRight = true;
     }
 
 
@@ -41,6 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Movement();
         PlaceTree();
+        RallyAnimals();
+        empower();
     }
 
     void Movement()
@@ -52,18 +47,9 @@ public class PlayerBehaviour : MonoBehaviour
             var _y = Input.GetAxis("Vertical") * Time.deltaTime;
             var _positionOffset = new Vector3(_x, _y, 0) * MovementSpeed;
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        transform.position += _positionOffset;
-=======
-            transform.position += _positionOffset;
-            DeterminFacingDirection(_x);
-        }        
-=======
             transform.position += _positionOffset;
             DeterminFacingDirection(_x);
         }
->>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
     }
     void DeterminFacingDirection(float _x)
     {
@@ -77,22 +63,17 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
->>>>>>> Stashed changes
 
-    }
 
     void PlaceTree()
     {
+
         var _treePlacement = new Vector3(1, 0, 0) + transform.position;
-<<<<<<< HEAD
-        
-=======
         if (!isFacingRight)
         {
             _treePlacement = new Vector3(-1, 0, 0) + transform.position;
         }
 
->>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         if (Input.GetKey(KeyCode.E))
         {
             if (!isHoldingTree)
@@ -100,8 +81,6 @@ public class PlayerBehaviour : MonoBehaviour
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
                 isHoldingTree = true;
             }
-             
-
         }
         if (Input.GetKey(KeyCode.E))
         {
@@ -109,10 +88,6 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 TreePreview.position = _treePlacement;
             }
-<<<<<<< Updated upstream
-            
-
-=======
         }
 
         if (Input.GetKeyUp(KeyCode.E))
@@ -156,11 +131,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D myCollision)
     {
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = myCollision.gameObject;
@@ -172,12 +143,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal")
         {
             collidingWith = null;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> faa68349cac2f173bbdeaf0383a53d58391979b4
         }
-
     }
 
     IEnumerator empoweringTimer()
