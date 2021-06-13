@@ -9,9 +9,11 @@ public class AnimalSpawning : MonoBehaviour
     public Transform Bear;
     public Text animalUI;
     private bool canSpawn;
+    private int TempChildCount;
 
     void Start()
     {
+        TempChildCount = 4;
         canSpawn = true;
         animalUI = GameObject.Find("Bears").GetComponent<Text>();
         animalUI.text = ": " + Animals.childCount;
@@ -21,8 +23,17 @@ public class AnimalSpawning : MonoBehaviour
     void Update()
     {
         SpawnAnimals();
+        CheckIfCountGrew();
     }
-
+    void CheckIfCountGrew()
+    {
+        if(transform.childCount > TempChildCount)
+        {
+            TempChildCount = transform.childCount;
+            GameObject.Find("TreeTurningAdult").GetComponent<AudioSource>().Play();
+            
+        }
+    }
     void SpawnAnimals()
     {
         

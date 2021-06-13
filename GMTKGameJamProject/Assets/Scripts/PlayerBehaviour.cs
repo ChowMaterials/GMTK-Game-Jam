@@ -218,6 +218,7 @@ public class PlayerBehaviour : MonoBehaviour
                 seedWheel.fillAmount = 0;
                 StartCoroutine(waitToPlant());
                 seedsInStock--;
+                GameObject.Find("TreePlanted").GetComponent<AudioSource>().Play();
             }
             else if(isHoldingTree && isOutOfBounds)
             {

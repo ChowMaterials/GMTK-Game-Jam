@@ -42,7 +42,9 @@ public class treeBehavior : MonoBehaviour
 
         if (hp <= 0)
         {
-            Destroy(gameObject);
+            GameObject.Find("TreeDies").GetComponent<AudioSource>().Play();
+            Destroy(gameObject,1);
+            
         }
         if (empowered)
         {
@@ -52,6 +54,7 @@ public class treeBehavior : MonoBehaviour
             humansAttacking = 0;
             if (GrowSageIndedx == 4)
                 GetComponent<SpriteRenderer>().sprite = empoweredStage[GrowSageIndedx-1];
+            
             else
                 GetComponent<SpriteRenderer>().sprite = empoweredStage[GrowSageIndedx];
         }
@@ -77,10 +80,13 @@ public class treeBehavior : MonoBehaviour
             if (GrowSageIndedx<4)
             {
                 StartCoroutine(Growing());
+                
             } 
             else
             {
                 transform.parent = TreeCollection;
+                
+                
             }
         }
     }
