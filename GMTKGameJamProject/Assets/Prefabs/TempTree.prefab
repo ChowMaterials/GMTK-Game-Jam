@@ -108,6 +108,11 @@ MonoBehaviour:
   - {fileID: -4748626754311878302, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: -6661628979808241995, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
   - {fileID: 6067550038348995488, guid: c13ceaeb4340b714fa085c78059594d1, type: 3}
+  empoweredStage:
+  - {fileID: -544884080235583205, guid: 9f5679111ac20634d8af29aa554336b1, type: 3}
+  - {fileID: 7316023206619207907, guid: 9f5679111ac20634d8af29aa554336b1, type: 3}
+  - {fileID: 6928192517031056671, guid: 9f5679111ac20634d8af29aa554336b1, type: 3}
+  - {fileID: 6295158005378899599, guid: 9f5679111ac20634d8af29aa554336b1, type: 3}
   TreeCollection: {fileID: 0}
   empowered: 0
 --- !u!61 &9022139654653784070
@@ -134,7 +139,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.19, y: 0.16}
   m_EdgeRadius: 0
 --- !u!50 &8531053365419069569
 Rigidbody2D:

@@ -22,8 +22,6 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
-    private Color defaultColor = new Color(16, 159, 173, 255);
-    private Color empoweringColor = new Color(255, 250, 26, 146);
     public float distanceToTarget;
 
     private DistanceJoint2D treeConnexion;
@@ -222,21 +220,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !empowering)
         {
-            
             if (collidingWith != null)
             {
-                distanceToTarget = Vector3.Distance(transform.position, collidingWith.transform.position);
-                if (distanceToTarget < 2f)
-                {
-                    Debug.Log("You're protected !");
                     empowering = true;
                     if(collidingWith.tag == "tree")
                     {
                         collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+                        StartCoroutine(empoweringTimer());
                     }
-                    charSprite.color = empoweringColor;
-                    StartCoroutine(empoweringTimer());
-                }
             }
         } 
     }
@@ -269,7 +260,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D myCollision)
+    private void OnTriggerStay2D(Collider2D myCollision)
     {
         if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
         {
@@ -277,20 +268,11 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D myCollision)
-    {
-        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
-        {
-            collidingWith = null;
-        }
-    }
-
     IEnumerator empoweringTimer()
     {
-        yield return new WaitForSeconds(3); //empowers for 3 seconds
+        yield return new WaitForSeconds(1); //empowers for 3 seconds
         empowering = false;
         collidingWith.GetComponent<treeBehavior>().empowered = empowering;
-        charSprite.color = defaultColor;
     }
 
 

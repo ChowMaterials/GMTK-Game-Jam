@@ -120,13 +120,16 @@ public class enemyBehavior : MonoBehaviour
 
         foreach (GameObject potentialTarget in trees)
         {
-            Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
-            float dSqrToTarget = directionToTarget.sqrMagnitude;
-            //&& Random.Range(1,11) > 1 
-            if ((dSqrToTarget < closestDistanceSqr && potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3 && potentialTarget.GetComponent<treeBehavior>().hp > 1))
+            if (potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3 && potentialTarget.GetComponent<treeBehavior>().hp > 1 && potentialTarget.GetComponent<treeBehavior>().GrowSageIndedx >= 3)
             {
-                closestDistanceSqr = dSqrToTarget;
-                bestTarget = potentialTarget.transform;
+                Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
+                float dSqrToTarget = directionToTarget.sqrMagnitude;
+                //&& Random.Range(1,11) > 1 
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget.transform;
+                }
             }
         }
 
@@ -190,8 +193,8 @@ public class enemyBehavior : MonoBehaviour
     }
     void Death()
     {
-        StartCoroutine(DeathDespawn());
-        
+        Destroy(gameObject, 1f);
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -224,10 +227,4 @@ public class enemyBehavior : MonoBehaviour
         
         canHitBear = true;
     }
-    IEnumerator DeathDespawn()
-    {
-        yield return new WaitForSeconds(1);
-        Destroy(gameObject);
-    }
-
 }

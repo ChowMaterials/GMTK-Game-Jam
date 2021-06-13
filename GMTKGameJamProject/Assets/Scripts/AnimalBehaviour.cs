@@ -98,13 +98,6 @@ public class AnimalBehaviour : MonoBehaviour
     }
     void Death()
     {
-        StartCoroutine(DespawnCooldown());
-    }
-
-    IEnumerator DespawnCooldown()
-    {
-
-        yield return new WaitForSeconds(1);
-        Destroy(gameObject);
+        Destroy(gameObject,1f);
     }
 }
