@@ -12,10 +12,12 @@ public class enemyBehavior : MonoBehaviour
     private Vector3 desiredPosition;
     private Vector3 previousPosition;
     public Transform target;
+    public bool carryingWood;
     
 
     void Start()
     {
+        carryingWood = false;
         speed = 1; // go high for testing purposes, but it should probably be set to 1 or 1,5f
         strikeCooldown = 2; //number of seconds to wait between attacks
         init();
@@ -24,8 +26,8 @@ public class enemyBehavior : MonoBehaviour
 
     void Update()
     {
-        //if no tree to cut was found yet
-        if (!foundTreeToCut)
+        //if no tree to cut was found yet and we're not carrying wood
+        if (!foundTreeToCut && !carryingWood)
         {
             //if the current target is not null and not the factory, it has to be a tree
             if (target != null && target != transform.parent)
@@ -43,29 +45,38 @@ public class enemyBehavior : MonoBehaviour
         //if we found a tree to cut
         else
         {
-            previousPosition = transform.position;
-            Move(desiredPosition);
-            //if we're no longer walking to the tree and we can attack we hit the tree once
-            if (Vector3.Distance(previousPosition,transform.position) == 0  && canAttack)
+            if (carryingWood)
             {
-                canAttack = false;
-                target.GetComponent<treeBehavior>().hp--;
-                StartCoroutine(waitForAttack());
+                previousPosition = transform.position;
+                target = transform.parent;
+                Move(target.position);
+                if (Vector3.Distance(previousPosition, transform.position) == 0)
+                {
+                    carryingWood = false;
+                    init();
+                }
+            }
+            else
+            {
+                previousPosition = transform.position;
+                Move(desiredPosition);
+                //if we're no longer walking to the tree and we can attack we hit the tree once
+                if (Vector3.Distance(previousPosition, transform.position) == 0 && canAttack)
+                {
+                    canAttack = false;
+                    target.GetComponent<treeBehavior>().hp--;
+                    StartCoroutine(waitForAttack());
 
-                
+
+                }
+                if ((target.GetComponent<treeBehavior>().hp <= 3 && target.GetComponent<treeBehavior>().humansAttacking == 3)
+                    || (target.GetComponent<treeBehavior>().hp <= 2 && target.GetComponent<treeBehavior>().humansAttacking == 2)
+                    || (target.GetComponent<treeBehavior>().hp <= 1)
+                    )
+                {
+                    carryingWood = true;
+                }
             }
-            if ((target.GetComponent<treeBehavior>().hp <= 3 && target.GetComponent<treeBehavior>().humansAttacking == 3)
-                || (target.GetComponent<treeBehavior>().hp <= 2 && target.GetComponent<treeBehavior>().humansAttacking == 2)
-                || (target.GetComponent<treeBehavior>().hp <= 1)
-                )
-            {
-                init();
-            }
-            /*//else if we're carrying wood we go back to the factory
-            else if(carryingWood)
-            {
-                target
-            }*/
         }
 
         
@@ -133,7 +144,6 @@ public class enemyBehavior : MonoBehaviour
         canAttack = true;
     }
 
-
     public void TakeDamage(int _Damage)
     {
         health -= _Damage;
@@ -147,4 +157,6 @@ public class enemyBehavior : MonoBehaviour
     {
 
     }
+
+    
 }
