@@ -11,6 +11,7 @@ public class treeBehavior : MonoBehaviour
     public bool treeGrowing;
     public int GrowSageIndedx;
     public Sprite[] GrowStage;
+    public Sprite[] empoweredStage;
     public Transform TreeCollection;
 
     private CircleCollider2D empowerementZone;
@@ -43,16 +44,27 @@ public class treeBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         if (empowered)
         {
             hp = 10;
             humansAttacking = 0;
+            if (GrowSageIndedx == 4)
+                GetComponent<SpriteRenderer>().sprite = empoweredStage[GrowSageIndedx-1];
+            else
+                GetComponent<SpriteRenderer>().sprite = empoweredStage[GrowSageIndedx];
+        }
+        else
+        {
+            if (GrowSageIndedx == 4)
+                GetComponent<SpriteRenderer>().sprite = GrowStage[GrowSageIndedx - 1];
+            else
+                GetComponent<SpriteRenderer>().sprite = GrowStage[GrowSageIndedx];
         }
         GrowCycle();
 
         //The Circle Collider grows with the tree
-        empowerementZone.radius = 0.08f + 0.03f * (GrowSageIndedx + 1);
+        empowerementZone.radius = 0.08f + 0.05f * (GrowSageIndedx + 1);
+        GetComponent<BoxCollider2D>().size = new Vector2(0.1f + 0.2f * (GrowSageIndedx),0.1f + 0.2f * (GrowSageIndedx));
 
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - animal
   - TreeCollection
+  - Bounds
   layers:
   - Default
   - TransparentFX

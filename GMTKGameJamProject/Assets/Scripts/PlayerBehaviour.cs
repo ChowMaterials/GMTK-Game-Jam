@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
+    public Sprite[] NimphSprites;
     public Transform TreeCollection;
     public Transform TreePreviewPrefab;
     public Transform TreePrefab;
@@ -22,8 +23,6 @@ public class PlayerBehaviour : MonoBehaviour
     public GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
-    private Color defaultColor = new Color(16, 159, 173, 255);
-    private Color empoweringColor = new Color(255, 250, 26, 146);
     public float distanceToTarget;
 
     private DistanceJoint2D treeConnexion;
@@ -31,12 +30,13 @@ public class PlayerBehaviour : MonoBehaviour
     private bool waitForHit;
     public int hp = 5;
     public static bool isPlayerDead;
-
+    private bool isOutOfBounds;
 
 
 
     void Start()
     {
+        isOutOfBounds = false;
         isPlayerDead = false;
         seedsInStock = 10; // start the game with 10 seeds to build your forest
         waitingToPlant = false;
@@ -108,10 +108,12 @@ public class PlayerBehaviour : MonoBehaviour
         if (_x > 0)
         {
             isFacingRight = true;
+            gameObject.GetComponent<SpriteRenderer>().sprite = NimphSprites[0];
         }
         if (_x < 0)
         {
             isFacingRight = false;
+            gameObject.GetComponent<SpriteRenderer>().sprite = NimphSprites[1];
         }
     }
     void LockToNearestTree()
@@ -131,13 +133,19 @@ public class PlayerBehaviour : MonoBehaviour
 
             }
         }
-        if(_DesiredConnection != transform)
+        gameObject.GetComponent<LineRenderer>().enabled = false;
+        if (_DesiredConnection != transform)
         {
             waitForHit = false;
             hp = 5;
             treeConnexion.connectedBody = _DesiredConnection.gameObject.GetComponent<Rigidbody2D>();
-            //Debug.DrawLine(transform.position, _DesiredConnection.position);
-            DrawConnectionToTree(_DesiredConnection.position);
+            if (_DesiredConnection.gameObject !=null)
+            {
+                gameObject.GetComponent<LineRenderer>().enabled = true;
+                DrawConnectionToTree(_DesiredConnection.position);
+            }
+            
+            
         }
         if (_DesiredConnection == transform)
         {
@@ -175,9 +183,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && canPlant() && seedsInStock > 0)
         {
-            StartCoroutine(waitToPlant());
-            seedsInStock--;
-            seedUI.text = ": " + seedsInStock;
+            
+            
             if (!isHoldingTree)
             {
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
@@ -188,13 +195,20 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (isHoldingTree)
             {
+                var _Color = new Color(1,1,1,0.5f);
+
                 TreePreview.position = _treePlacement;
+                if(isOutOfBounds)
+                {
+                    _Color = new Color(1,0.5f,0.5f,0.5f);
+                }
+                TreePreview.gameObject.GetComponent<SpriteRenderer>().color = _Color;
             }
         }
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            if (isHoldingTree)
+            if (isHoldingTree && !isOutOfBounds)
             {
                 var _newTreeOffset = _treePlacement + new Vector3(0, 0, 1);
                 var _tree = Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
@@ -202,6 +216,14 @@ public class PlayerBehaviour : MonoBehaviour
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
                 seedWheel.fillAmount = 0;
+                StartCoroutine(waitToPlant());
+                seedsInStock--;
+                seedUI.text = ": " + seedsInStock;
+            }
+            else if(isHoldingTree && isOutOfBounds)
+            {
+                isHoldingTree = false;
+                Destroy(TreePreview.gameObject);
             }
         }
 
@@ -222,21 +244,14 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !empowering)
         {
-            
             if (collidingWith != null)
             {
-                distanceToTarget = Vector3.Distance(transform.position, collidingWith.transform.position);
-                if (distanceToTarget < 2f)
-                {
-                    Debug.Log("You're protected !");
                     empowering = true;
                     if(collidingWith.tag == "tree")
                     {
                         collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+                        StartCoroutine(empoweringTimer());
                     }
-                    charSprite.color = empoweringColor;
-                    StartCoroutine(empoweringTimer());
-                }
             }
         } 
     }
@@ -269,11 +284,16 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D myCollision)
+    private void OnTriggerStay2D(Collider2D myCollision)
     {
         if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
         {
             collidingWith = myCollision.gameObject;
+        }
+        if(myCollision.gameObject.tag == "Bounds")
+        {
+            isOutOfBounds = true;
+            
         }
     }
 
@@ -283,14 +303,17 @@ public class PlayerBehaviour : MonoBehaviour
         {
             collidingWith = null;
         }
+        if (myCollision.gameObject.tag == "Bounds")
+        {
+            isOutOfBounds = false;
+        }
     }
 
     IEnumerator empoweringTimer()
     {
-        yield return new WaitForSeconds(3); //empowers for 3 seconds
+        yield return new WaitForSeconds(1); //empowers for 3 seconds
         empowering = false;
         collidingWith.GetComponent<treeBehavior>().empowered = empowering;
-        charSprite.color = defaultColor;
     }
 
 
