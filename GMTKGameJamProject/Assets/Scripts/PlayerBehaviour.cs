@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField] float MovementSpeed;
+    public Sprite[] NimphSprites;
     public Transform TreeCollection;
     public Transform TreePreviewPrefab;
     public Transform TreePrefab;
@@ -29,12 +30,13 @@ public class PlayerBehaviour : MonoBehaviour
     private bool waitForHit;
     public int hp = 5;
     public static bool isPlayerDead;
-
+    private bool isOutOfBounds;
 
 
 
     void Start()
     {
+        isOutOfBounds = false;
         isPlayerDead = false;
         seedsInStock = 10; // start the game with 10 seeds to build your forest
         waitingToPlant = false;
@@ -106,10 +108,12 @@ public class PlayerBehaviour : MonoBehaviour
         if (_x > 0)
         {
             isFacingRight = true;
+            gameObject.GetComponent<SpriteRenderer>().sprite = NimphSprites[0];
         }
         if (_x < 0)
         {
             isFacingRight = false;
+            gameObject.GetComponent<SpriteRenderer>().sprite = NimphSprites[1];
         }
     }
     void LockToNearestTree()
@@ -129,13 +133,19 @@ public class PlayerBehaviour : MonoBehaviour
 
             }
         }
-        if(_DesiredConnection != transform)
+        gameObject.GetComponent<LineRenderer>().enabled = false;
+        if (_DesiredConnection != transform)
         {
             waitForHit = false;
             hp = 5;
             treeConnexion.connectedBody = _DesiredConnection.gameObject.GetComponent<Rigidbody2D>();
-            //Debug.DrawLine(transform.position, _DesiredConnection.position);
-            DrawConnectionToTree(_DesiredConnection.position);
+            if (_DesiredConnection.gameObject !=null)
+            {
+                gameObject.GetComponent<LineRenderer>().enabled = true;
+                DrawConnectionToTree(_DesiredConnection.position);
+            }
+            
+            
         }
         if (_DesiredConnection == transform)
         {
@@ -173,9 +183,8 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && canPlant() && seedsInStock > 0)
         {
-            StartCoroutine(waitToPlant());
-            seedsInStock--;
-            seedUI.text = ": " + seedsInStock;
+            
+            
             if (!isHoldingTree)
             {
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
@@ -186,13 +195,20 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (isHoldingTree)
             {
+                var _Color = new Color(1,1,1,0.5f);
+
                 TreePreview.position = _treePlacement;
+                if(isOutOfBounds)
+                {
+                    _Color = new Color(1,0.5f,0.5f,0.5f);
+                }
+                TreePreview.gameObject.GetComponent<SpriteRenderer>().color = _Color;
             }
         }
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            if (isHoldingTree)
+            if (isHoldingTree && !isOutOfBounds)
             {
                 var _newTreeOffset = _treePlacement + new Vector3(0, 0, 1);
                 var _tree = Instantiate(TreePrefab, _newTreeOffset, Quaternion.identity);
@@ -200,6 +216,14 @@ public class PlayerBehaviour : MonoBehaviour
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
                 seedWheel.fillAmount = 0;
+                StartCoroutine(waitToPlant());
+                seedsInStock--;
+                seedUI.text = ": " + seedsInStock;
+            }
+            else if(isHoldingTree && isOutOfBounds)
+            {
+                isHoldingTree = false;
+                Destroy(TreePreview.gameObject);
             }
         }
 
@@ -265,6 +289,23 @@ public class PlayerBehaviour : MonoBehaviour
         if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
         {
             collidingWith = myCollision.gameObject;
+        }
+        if(myCollision.gameObject.tag == "Bounds")
+        {
+            isOutOfBounds = true;
+            
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D myCollision)
+    {
+        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
+        {
+            collidingWith = null;
+        }
+        if (myCollision.gameObject.tag == "Bounds")
+        {
+            isOutOfBounds = false;
         }
     }
 
