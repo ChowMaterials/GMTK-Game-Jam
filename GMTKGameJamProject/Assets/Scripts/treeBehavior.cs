@@ -46,7 +46,9 @@ public class treeBehavior : MonoBehaviour
         }
         if (empowered)
         {
-            hp = 10;
+            hp += 3;
+            if (hp > 10)
+                hp = 10;
             humansAttacking = 0;
             if (GrowSageIndedx == 4)
                 GetComponent<SpriteRenderer>().sprite = empoweredStage[GrowSageIndedx-1];

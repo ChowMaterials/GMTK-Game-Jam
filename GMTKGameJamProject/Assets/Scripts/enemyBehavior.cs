@@ -20,6 +20,8 @@ public class enemyBehavior : MonoBehaviour
     private Collider2D Bear;
     public ParticleSystem Particel;
 
+    public float distanceToParents;
+
 
     void Start()
     {
@@ -35,11 +37,13 @@ public class enemyBehavior : MonoBehaviour
 
     void Update()
     {
-        if(isDead)
+        distanceToParents = Vector2.Distance(transform.parent.position, transform.position);
+        if (isDead)
         {
             Death();
             return;
         }
+
 
         if (!isAttacking)
         {
@@ -64,10 +68,9 @@ public class enemyBehavior : MonoBehaviour
             {
                 if (carryingWood)
                 {
-                    previousPosition = transform.position;
                     target = transform.parent;
                     Move(target.position);
-                    if (Vector3.Distance(previousPosition, transform.position) <=1)
+                    if (distanceToParents <= 1)
                     {
                         carryingWood = false;
                         init();
@@ -83,8 +86,6 @@ public class enemyBehavior : MonoBehaviour
                         canAttack = false;
                         target.GetComponent<treeBehavior>().hp--;
                         StartCoroutine(waitForAttack());
-
-
                     }
                     if ((target.GetComponent<treeBehavior>().hp <= 3 && target.GetComponent<treeBehavior>().humansAttacking == 3)
                         || (target.GetComponent<treeBehavior>().hp <= 2 && target.GetComponent<treeBehavior>().humansAttacking == 2)
@@ -120,7 +121,8 @@ public class enemyBehavior : MonoBehaviour
 
         foreach (GameObject potentialTarget in trees)
         {
-            if (potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3 && potentialTarget.GetComponent<treeBehavior>().hp > 1 && potentialTarget.GetComponent<treeBehavior>().GrowSageIndedx >= 3)
+            if (potentialTarget.GetComponent<treeBehavior>().humansAttacking < 3 && potentialTarget.GetComponent<treeBehavior>().hp > 1 
+                && !potentialTarget.GetComponent<treeBehavior>().empowered)
             {
                 Vector3 directionToTarget = potentialTarget.transform.position - currentPosition;
                 float dSqrToTarget = directionToTarget.sqrMagnitude;
@@ -194,6 +196,10 @@ public class enemyBehavior : MonoBehaviour
     void Death()
     {
         Destroy(gameObject, 1f);
+        if (Random.Range(1, 11) < 3)
+        {
+            GameObject.Find("Charicter").GetComponent<PlayerBehaviour>().seedsInStock++;
+        }
 
     }
 

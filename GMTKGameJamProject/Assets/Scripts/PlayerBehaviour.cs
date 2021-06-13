@@ -14,15 +14,13 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isHoldingTree;
     private bool isFacingRight;
 
-    private int seedsInStock;
-    private float plantCooldown = 3f; //Can plant a tree every 3 seconds
+    public int seedsInStock;
+    private float plantCooldown = 2f; //Can plant a tree every 2 seconds
     private Text seedUI;
     private Image seedWheel;
     public bool waitingToPlant;
 
-    public GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
-    private SpriteRenderer charSprite;
     public float distanceToTarget;
 
     private DistanceJoint2D treeConnexion;
@@ -50,7 +48,6 @@ public class PlayerBehaviour : MonoBehaviour
         seedWheel = GameObject.Find("seedCooldownWheel").GetComponent<Image>();
         seedWheel.fillAmount = 1;
 
-        charSprite = GetComponent<SpriteRenderer>();
         empowering = false;
         isHoldingTree = false;
         isFacingRight = true;
@@ -70,12 +67,15 @@ public class PlayerBehaviour : MonoBehaviour
             return;
         }
 
+        
+
         PlaceTree();
         RallyAnimals();
         empower();
 
+        seedUI.text = ": " + seedsInStock;
         if (seedWheel.fillAmount < 1)
-            seedWheel.fillAmount += 0.3333f * 1f * Time.deltaTime;
+            seedWheel.fillAmount += 0.5f * Time.deltaTime;
 
         if (seedWheel.fillAmount == 1)
             seedWheel.color = Color.green;
@@ -218,7 +218,6 @@ public class PlayerBehaviour : MonoBehaviour
                 seedWheel.fillAmount = 0;
                 StartCoroutine(waitToPlant());
                 seedsInStock--;
-                seedUI.text = ": " + seedsInStock;
             }
             else if(isHoldingTree && isOutOfBounds)
             {
@@ -244,14 +243,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !empowering)
         {
-            if (collidingWith != null)
-            {
-                    empowering = true;
-                    if(collidingWith.tag == "tree")
-                    {
-                        collidingWith.GetComponent<treeBehavior>().empowered = empowering;
-                        StartCoroutine(empoweringTimer());
-                    }
+            if (treeConnexion.connectedBody != null) {
+                empowering = true;
+                treeConnexion.connectedBody.gameObject.GetComponent<treeBehavior>().empowered = empowering;
+                StartCoroutine(empoweringTimer());
             }
         } 
     }
@@ -286,10 +281,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D myCollision)
     {
-        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
-        {
-            collidingWith = myCollision.gameObject;
-        }
         if(myCollision.gameObject.tag == "Bounds")
         {
             isOutOfBounds = true;
@@ -299,10 +290,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D myCollision)
     {
-        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
-        {
-            collidingWith = null;
-        }
+        
         if (myCollision.gameObject.tag == "Bounds")
         {
             isOutOfBounds = false;
@@ -313,7 +301,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         yield return new WaitForSeconds(1); //empowers for 3 seconds
         empowering = false;
-        collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+        treeConnexion.connectedBody.gameObject.GetComponent<treeBehavior>().empowered = empowering;
     }
 
 

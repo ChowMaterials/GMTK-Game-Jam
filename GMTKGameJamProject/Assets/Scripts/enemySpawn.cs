@@ -7,7 +7,8 @@ public class enemySpawn : MonoBehaviour
 
     public GameObject enemyPrefab;
     public float spawnRadius;
-    public float spawnTimer = 1;
+    public float spawnTimer = 3;
+    public int maxHumans;
 
     private bool intoCouroutine;
     private GameObject enemySpawned;
@@ -16,13 +17,18 @@ public class enemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        maxHumans = 8;
         intoCouroutine = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(transform.childCount < 12 && !intoCouroutine)
+        if (spawnTimer <= 0)
+            spawnTimer = 0.1f;
+        if (maxHumans >= 20)
+            maxHumans = 20;
+        if (transform.childCount < maxHumans && !intoCouroutine)
         {
             intoCouroutine = true;
             StartCoroutine(EnemySpawn());            

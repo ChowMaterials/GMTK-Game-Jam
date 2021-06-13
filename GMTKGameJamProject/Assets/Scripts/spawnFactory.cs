@@ -10,11 +10,13 @@ public class spawnFactory : MonoBehaviour
     public bool canSpawn;
     private float xPos;
     private float yPos;
+    private int totalFactoriesSpawned;
 
     // Start is called before the first frame update
     void Start()
     {
         canSpawn = false;
+        totalFactoriesSpawned = 0;
         StartCoroutine(firstSpawn());
     }
 
@@ -32,7 +34,10 @@ public class spawnFactory : MonoBehaviour
                 {
                     newFactory = Instantiate(factory, new Vector2(xPos, yPos), transform.rotation);
                     newFactory.transform.parent = transform;
+                    newFactory.GetComponent<enemySpawn>().spawnTimer -= 0.2f * totalFactoriesSpawned;
+                    newFactory.GetComponent<enemySpawn>().maxHumans += totalFactoriesSpawned;
                     canSpawn = false;
+                    totalFactoriesSpawned++;
                     StartCoroutine(waitToSpawn());
                 }                
             }
@@ -41,6 +46,7 @@ public class spawnFactory : MonoBehaviour
                 newFactory = Instantiate(factory, new Vector2(xPos, yPos), transform.rotation);
                 newFactory.transform.parent = transform;
                 canSpawn = false;
+                totalFactoriesSpawned++;
                 StartCoroutine(waitToSpawn());
             }
             if (!canSpawn && spawnCooldown > 5)
