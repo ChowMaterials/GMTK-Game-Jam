@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimalSpawning : MonoBehaviour
 {
     public Transform Animals;
     public Transform Bear;
+    public Text animalUI;
 
     void Start()
     {
-        
+        animalUI = GameObject.Find("Bears").GetComponent<Text>();
+        animalUI.text = "Bears : " + Animals.childCount;
     }
 
     
@@ -27,6 +30,8 @@ public class AnimalSpawning : MonoBehaviour
             var _SpawnPosition = transform.GetChild(transform.childCount-1).position;
             var _newAnimal = Instantiate(Bear, _SpawnPosition, Quaternion.identity);
             _newAnimal.parent = Animals;
+            animalUI.text = "Bears : " + Animals.childCount;
+
 
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -12,23 +13,48 @@ public class PlayerBehaviour : MonoBehaviour
     private bool isHoldingTree;
     private bool isFacingRight;
 
-    private GameObject collidingWith;
+    private int seedsInStock;
+    private float plantCooldown = 3f; //Can plant a tree every 3 seconds
+    private Text seedUI;
+    private Image seedWheel;
+    public bool waitingToPlant;
+
+    public GameObject collidingWith;
     private bool empowering; // if the spirit is empowering, it can no longer move
     private SpriteRenderer charSprite;
     private Color defaultColor = new Color(16, 159, 173, 255);
     private Color empoweringColor = new Color(255, 250, 26, 146);
-
     public float distanceToTarget;
+
+    private DistanceJoint2D treeConnexion;
+    public GameObject redFlash;
+    private bool waitForHit;
+    public int hp = 5;
+    public static bool isPlayerDead;
 
 
 
 
     void Start()
     {
+        isPlayerDead = false;
+        seedsInStock = 10; // start the game with 10 seeds to build your forest
+        waitingToPlant = false;
+
+        treeConnexion = GetComponent<DistanceJoint2D>();
+        redFlash.SetActive(false);
+        waitForHit = true;
+
+        seedUI = GameObject.Find("Seeds").GetComponent<Text>();
+        seedUI.text = ": " + seedsInStock;
+        seedWheel = GameObject.Find("seedCooldownWheel").GetComponent<Image>();
+        seedWheel.fillAmount = 1;
+
         charSprite = GetComponent<SpriteRenderer>();
         empowering = false;
         isHoldingTree = false;
         isFacingRight = true;
+        
     }
 
     void FixedUpdate()
@@ -37,17 +63,36 @@ public class PlayerBehaviour : MonoBehaviour
     }
     void Update()
     {
-        
+        if (hp <= 0)
+        {
+            isPlayerDead = true;
+            redFlash.SetActive(false);
+            return;
+        }
+
         PlaceTree();
         RallyAnimals();
         empower();
+
+        if (seedWheel.fillAmount < 1)
+            seedWheel.fillAmount += 0.3333f * 1f * Time.deltaTime;
+
+        if (seedWheel.fillAmount == 1)
+            seedWheel.color = Color.green;
+        else
+            seedWheel.color = Color.red;
+
+
+        if (treeConnexion.connectedBody == null && !waitForHit)
+            playerHurting();
+
         
     }
 
     void Movement()
     {
         // can only move if not empowering
-        if (!empowering)
+        if (!empowering && !isPlayerDead)
         {
             var _x = Input.GetAxis("Horizontal") * Time.deltaTime;
             var _y = Input.GetAxis("Vertical") * Time.deltaTime;
@@ -88,9 +133,15 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if(_DesiredConnection != transform)
         {
-            transform.gameObject.GetComponent<DistanceJoint2D>().connectedBody = _DesiredConnection.gameObject.GetComponent<Rigidbody2D>();
-            Debug.DrawLine(transform.position, _DesiredConnection.position);
+            waitForHit = false;
+            hp = 5;
+            treeConnexion.connectedBody = _DesiredConnection.gameObject.GetComponent<Rigidbody2D>();
+            //Debug.DrawLine(transform.position, _DesiredConnection.position);
             DrawConnectionToTree(_DesiredConnection.position);
+        }
+        if (_DesiredConnection == transform)
+        {
+            treeConnexion.connectedBody = null;
         }
         
     }
@@ -101,6 +152,17 @@ public class PlayerBehaviour : MonoBehaviour
         _line.SetPosition(1, _endPoint);
     }
 
+    bool canPlant()
+    { 
+        return !waitingToPlant;
+    }
+
+    IEnumerator waitToPlant()
+    {
+        waitingToPlant = true;
+        yield return new WaitForSeconds(plantCooldown);
+        waitingToPlant = false;
+    }
 
     void PlaceTree()
     {
@@ -111,8 +173,11 @@ public class PlayerBehaviour : MonoBehaviour
             _treePlacement = new Vector3(-1, 0, 0) + transform.position;
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && canPlant() && seedsInStock > 0)
         {
+            StartCoroutine(waitToPlant());
+            seedsInStock--;
+            seedUI.text = ": " + seedsInStock;
             if (!isHoldingTree)
             {
                 TreePreview = Instantiate(TreePreviewPrefab, _treePlacement, Quaternion.identity);
@@ -136,12 +201,13 @@ public class PlayerBehaviour : MonoBehaviour
                 
                 isHoldingTree = false;
                 Destroy(TreePreview.gameObject);
+                seedWheel.fillAmount = 0;
             }
         }
 
     }
 
-
+    
 
     void RallyAnimals()
     {
@@ -171,9 +237,36 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 
+    void playerHurting()
+    {
+        waitForHit = true;
+        StartCoroutine(waitASecond());
+    }
+
+    IEnumerator showAndHide(GameObject screenFlash, float duration)
+    {
+        hp--;
+        redFlash.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        redFlash.SetActive(false);
+        waitForHit = false;
+    }
+
+    IEnumerator waitASecond()
+    {
+        yield return new WaitForSeconds(1);
+        if (treeConnexion.connectedBody == null)
+            StartCoroutine(showAndHide(redFlash, 0.5f));
+        else
+        {
+            waitForHit = false;
+            hp = 5;
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D myCollision)
     {
-        if ((myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal") && (myCollision.GetType() == typeof(CircleCollider2D)))
+        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
         {
             collidingWith = myCollision.gameObject;
         }
@@ -181,7 +274,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D myCollision)
     {
-        if ((myCollision.gameObject.tag == "tree" || myCollision.gameObject.tag == "animal") && (myCollision.GetType() == typeof(CircleCollider2D)))
+        if ((myCollision.gameObject.tag == "tree" /*|| myCollision.gameObject.tag == "animal"*/) && (myCollision.GetType() == typeof(CircleCollider2D)))
         {
             collidingWith = null;
         }
@@ -194,5 +287,6 @@ public class PlayerBehaviour : MonoBehaviour
         collidingWith.GetComponent<treeBehavior>().empowered = empowering;
         charSprite.color = defaultColor;
     }
+
 
 }
