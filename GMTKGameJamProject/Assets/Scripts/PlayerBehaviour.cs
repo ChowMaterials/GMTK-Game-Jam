@@ -222,6 +222,7 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q) && !empowering)
         {
+            
             if (collidingWith != null)
             {
                 distanceToTarget = Vector3.Distance(transform.position, collidingWith.transform.position);
@@ -229,13 +230,17 @@ public class PlayerBehaviour : MonoBehaviour
                 {
                     Debug.Log("You're protected !");
                     empowering = true;
-                    collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+                    if(collidingWith.tag == "tree")
+                    {
+                        collidingWith.GetComponent<treeBehavior>().empowered = empowering;
+                    }
                     charSprite.color = empoweringColor;
                     StartCoroutine(empoweringTimer());
                 }
             }
-        }
+        } 
     }
+    
 
     void playerHurting()
     {

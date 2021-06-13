@@ -12,7 +12,7 @@ public class AnimalSpawning : MonoBehaviour
     void Start()
     {
         animalUI = GameObject.Find("Bears").GetComponent<Text>();
-        animalUI.text = "Bears : " + Animals.childCount;
+        animalUI.text = ": " + Animals.childCount;
     }
 
     
@@ -30,7 +30,7 @@ public class AnimalSpawning : MonoBehaviour
             var _SpawnPosition = transform.GetChild(transform.childCount-1).position;
             var _newAnimal = Instantiate(Bear, _SpawnPosition, Quaternion.identity);
             _newAnimal.parent = Animals;
-            animalUI.text = "Bears : " + Animals.childCount;
+            animalUI.text = ": " + Animals.childCount;
 
 
         }
