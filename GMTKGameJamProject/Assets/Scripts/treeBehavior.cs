@@ -12,6 +12,8 @@ public class treeBehavior : MonoBehaviour
     public int GrowSageIndedx;
     public Sprite[] GrowStage;
     public Transform TreeCollection;
+
+    private CircleCollider2D empowerementZone;
     public bool empowered;
 
 
@@ -20,6 +22,7 @@ public class treeBehavior : MonoBehaviour
     {
         empowered = false;
         GetComponent<SpriteRenderer>().sprite = GrowStage[GrowSageIndedx];
+        empowerementZone = GetComponent<CircleCollider2D>();
         treeDying = false;
         treeGrowing = false;
         humansAttacking = 0;
@@ -47,13 +50,17 @@ public class treeBehavior : MonoBehaviour
             humansAttacking = 0;
         }
         GrowCycle();
+
+        //The Circle Collider grows with the tree
+        empowerementZone.radius = 0.08f + 0.03f * (GrowSageIndedx + 1);
+
     }
 
     void GrowCycle()
     {
         if(!treeGrowing)
         {
-            if (GrowSageIndedx<5)
+            if (GrowSageIndedx<4)
             {
                 StartCoroutine(Growing());
             } 

@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -97,7 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bdafb29cbb8e046a6e6da7b1f8bcdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttacking: 0
+  strikeCooldown: 0
+  canAttack: 0
+  foundTreeToCut: 0
+  speed: 1
+  health: 100
+  target: {fileID: 0}
 --- !u!50 &1074184110429992740
 Rigidbody2D:
   serializedVersion: 4
